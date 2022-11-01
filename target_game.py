@@ -18,7 +18,7 @@ def generate_grid() -> list[list[str]]:
     list[list[str]]
         The generated grid
     """
-    letters = "abcdefghijklmnopqrstuvwxyz"
+    letters = 'abcdefghijklmnopqrstuvwxyz'
     grid: list[list] = []
     for i in range(3):
         grid.append([])
@@ -43,7 +43,7 @@ def get_words(file: str, letters: list) -> tuple:
     list
         The words that consist of these letters
     """
-    with open(file, encoding="utf-8") as dictionary:
+    with open(file, encoding='utf-8') as dictionary:
         words = dictionary.read().splitlines()[3:]
         valid_words = set()
         letter_amounts = _get_letter_amounts(letters)
@@ -126,7 +126,7 @@ def get_user_words():
     user_words = []
     while True:
         try:
-            user_words.append(input("Enter a word: "))
+            user_words.append(input('Enter a word: '))
         except EOFError:
             return user_words
 
@@ -183,32 +183,48 @@ def results(grid: list[list[str]], user_words: list[str], words_from_dict: list[
         The words from the dictionary
     """
     print()
-    print("Possible words:")
-    for i in words_from_dict:
-        print(f"  {i}")
-    print("User words:")
-    for i in user_words:
-        print(f"  {i}")
-    pure_user_words = get_pure_user_words(
-        user_words, [i for j in grid for i in j], words_from_dict
-    )
-    print("Pure user words:")
-    for i in pure_user_words:
-        print(f"  {i}")
-    print()
-    print("Results")
-    print("-------")
-    print(f"Correct words: {sum(i in words_from_dict for i in user_words)}")
-    print("Possible words:")
-    for i in words_from_dict:
-        print(f"  {i}")
-    print("Forgotten words:")
-    for i in words_from_dict:
-        if i not in user_words:
-            print(f"  {i}")
-    print("Unknown user words:")
-    for i in pure_user_words:
-        print(f"  {i}")
+    with open('results.txt', 'w', encoding='utf-8') as file:
+        print('Possible words:')
+        for i in words_from_dict:
+            print(f'  {i}')
+        print('User words:')
+        for i in user_words:
+            print(f'  {i}')
+        pure_user_words = get_pure_user_words(
+            user_words, [i for j in grid for i in j], words_from_dict
+        )
+        print('Pure user words:')
+        for i in pure_user_words:
+            print(f'  {i}')
+        print('')
+        _write_and_print(file, 'Results')
+        _write_and_print(file, '-------')
+        _write_and_print(file, f'Correct words: {sum(i in words_from_dict for i in user_words)}')
+        _write_and_print(file, 'Possible words:')
+        for i in words_from_dict:
+            _write_and_print(file, f'  {i}')
+        _write_and_print(file, 'Forgotten words:')
+        for i in words_from_dict:
+            if i not in user_words:
+                _write_and_print(file, f'  {i}')
+        _write_and_print(file, 'Unknown user words:')
+        for i in pure_user_words:
+            _write_and_print(file, f'  {i}')
+
+
+def _write_and_print(file, text: str) -> None:
+    """
+    Writes text to a file and prints it
+
+    Parameters
+    ----------
+    file
+        The file to write to
+    text : str
+        The text to write
+    """
+    file.write(f'{text}\n')
+    print(text)
 
 
 def main():
@@ -218,9 +234,9 @@ def main():
     grid = generate_grid()
     for i in grid:
         print(*i)
-    words_from_dict = get_words("en", [i for j in grid for i in j])
+    words_from_dict = get_words('en', [i for j in grid for i in j])
     user_words = get_user_words()
     results(grid, user_words, words_from_dict)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
