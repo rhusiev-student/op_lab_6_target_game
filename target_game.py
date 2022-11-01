@@ -168,3 +168,44 @@ def get_pure_user_words(
             pure_user_words.append(word)
     return pure_user_words
 
+
+def results(grid: list[list[str]], user_words: list[str], words_from_dict: list[str]) -> None:
+    """
+    Prints the results of the game
+
+    Parameters
+    ----------
+    grid : list[list[str]]
+        The grid of letters
+    user_words : list[str]
+        The words entered by the user
+    words_from_dict : list[str]
+        The words from the dictionary
+    """
+    print()
+    print("Possible words:")
+    for i in words_from_dict:
+        print(f"  {i}")
+    print("User words:")
+    for i in user_words:
+        print(f"  {i}")
+    pure_user_words = get_pure_user_words(
+        user_words, [i for j in grid for i in j], words_from_dict
+    )
+    print("Pure user words:")
+    for i in pure_user_words:
+        print(f"  {i}")
+    print()
+    print("Results")
+    print("-------")
+    print(f"Correct words: {sum(i in words_from_dict for i in user_words)}")
+    print("Possible words:")
+    for i in words_from_dict:
+        print(f"  {i}")
+    print("Forgotten words:")
+    for i in words_from_dict:
+        if i not in user_words:
+            print(f"  {i}")
+    print("Unknown user words:")
+    for i in pure_user_words:
+        print(f"  {i}")
