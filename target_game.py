@@ -209,3 +209,18 @@ def results(grid: list[list[str]], user_words: list[str], words_from_dict: list[
     print("Unknown user words:")
     for i in pure_user_words:
         print(f"  {i}")
+
+
+def main():
+    """
+    The main function
+    """
+    grid = generate_grid()
+    for i in grid:
+        print(*i)
+    words_from_dict = get_words("en", [i for j in grid for i in j])
+    user_words = get_user_words()
+    results(grid, user_words, words_from_dict)
+
+if __name__ == "__main__":
+    main()
