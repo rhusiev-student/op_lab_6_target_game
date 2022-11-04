@@ -1,11 +1,6 @@
 Results
 -------
-Correct words: 1
+Correct words: 0
 Possible words:
-  chess
-  sech
-  chef
 Forgotten words:
-  chess
-  chef
 Unknown user words:

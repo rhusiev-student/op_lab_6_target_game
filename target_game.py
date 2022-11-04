@@ -49,6 +49,7 @@ def get_words(file: str, letters: list) -> list[str]:
         letter_amounts = _get_letter_amounts(letters)
         middle_letter = letters[4]
         for word in words:
+            word = word.lower()
             if len(word) >= 4 and set(word).issubset([i[0] for i in letter_amounts]):
                 if (
                     all(
